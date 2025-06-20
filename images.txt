@@ -8,3 +8,4 @@ jellyfin/jellyfin
 homeassistant/home-assistant
 alturismo/xteve
 niavasha/udpxy
+bestzwei/libretv
