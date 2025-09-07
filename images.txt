@@ -9,3 +9,5 @@ homeassistant/home-assistant
 alturismo/xteve
 niavasha/udpxy
 bestzwei/libretv
+jellyfin/jellyfin
+nyanmisaka/jellyfin
