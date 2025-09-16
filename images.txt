@@ -11,3 +11,4 @@ niavasha/udpxy
 bestzwei/libretv
 jellyfin/jellyfin
 nyanmisaka/jellyfin
+jxxghp/moviepilot-v2
