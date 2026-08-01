@@ -12,3 +12,4 @@ bestzwei/libretv
 jellyfin/jellyfin
 nyanmisaka/jellyfin
 jxxghp/moviepilot-v2
+develop767/migu_video
