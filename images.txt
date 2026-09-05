@@ -13,3 +13,4 @@ jellyfin/jellyfin
 nyanmisaka/jellyfin
 jxxghp/moviepilot-v2
 develop767/migu_video
+linux/arm/v7 develop767/migu_video:latest
