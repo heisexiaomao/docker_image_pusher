@@ -1,19 +1,14 @@
 name: Docker
-
 on:
   workflow_dispatch:
   push:
     branches: [ main ]
-
-
 env:
   ALIYUN_REGISTRY: "${{ secrets.ALIYUN_REGISTRY }}"
   ALIYUN_NAME_SPACE: "${{ secrets.ALIYUN_NAME_SPACE }}"
   ALIYUN_REGISTRY_USER: "${{ secrets.ALIYUN_REGISTRY_USER }}"
   ALIYUN_REGISTRY_PASSWORD: "${{ secrets.ALIYUN_REGISTRY_PASSWORD }}"
-
 jobs:
-
   build:
     name: Pull
     runs-on: ubuntu-latest
@@ -24,39 +19,35 @@ jobs:
         echo "=============================================================================="
         df -hT
         echo "=============================================================================="
-
-    # 增加可用磁盘空间
+    # 增加可用磁盘空间，固定版本，不再使用master
     - name: Maximize build space
-      uses: easimon/maximize-build-space@master
+      uses: easimon/maximize-build-space@v10
       with:
-
         root-reserve-mb: 2048
         swap-size-mb: 128
         remove-dotnet: 'true'
         remove-haskell: 'true'
-        # 如果空间还是不够用，可以把以下开启，清理出更多空间
         # remove-android: 'true'
         # remove-codeql: 'true'
         build-mount-path: '/var/lib/docker/'
-
     - name: Restart docker
       run: sudo service docker restart
-
     - name: Free up disk space complete
       run: |
         echo "Free up disk space complete"
         echo "=============================================================================="
         df -hT
         echo "=============================================================================="
-
     - name: Checkout Code
-      uses: actions/checkout@v4
-
-    - name: Docker Setup Buildx
-      uses: docker/setup-buildx-action@v3
+      uses: actions/checkout@v6
+    # ====== 这里注释：只是镜像搬运，不需要buildx，同时消除docker/setup-buildx-action Node20警告 ======
+    # - name: Docker Setup Buildx
+    #   uses: docker/setup-buildx-action@v4
 
     - name: Build and push image Aliyun
       run: |
+        set -eo pipefail
+        echo "Login to $ALIYUN_REGISTRY"
         docker login -u $ALIYUN_REGISTRY_USER -p $ALIYUN_REGISTRY_PASSWORD $ALIYUN_REGISTRY
         # 数据预处理,判断镜像是否重名
         declare -A duplicate_images
@@ -119,7 +110,6 @@ jobs:
             echo "platform_prefix is $platform_prefix"
             # 获取镜像的完整名称，例如kasmweb/nginx:1.25.3（命名空间/镜像名:版本号）
             image=$(echo "$line" | awk '{print $NF}')
-
             # 获取 镜像名:版本号  例如nginx:1.25.3
             image_name_tag=$(echo "$image" | awk -F'/' '{print $NF}')
             # 获取命名空间 例如kasmweb  这里有种特殊情况 docker.io/nginx，把docker.io当成命名空间，也OK
