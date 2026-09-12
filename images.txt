@@ -14,3 +14,4 @@ nyanmisaka/jellyfin
 jxxghp/moviepilot-v2
 develop767/migu_video
 --platform=linux/arm/v7 develop767/migu_video:latest
+Kasmweb/Chrome
