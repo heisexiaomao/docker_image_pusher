@@ -13,5 +13,5 @@
 #nyanmisaka/jellyfin
 #jxxghp/moviepilot-v2
 #develop767/migu_video
-kasmweb/chrome:1.18.0
+kasmweb/chrome:1.19.0-rolling-daily
 #--platform=linux/arm/v7 develop767/migu_video:latest
